@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const jobSchema = mongoose.Schema({
+const jobSchema = mongoose.Schema({    
+    job_name : String,
     post : String,
     offered_by : {
         type : mongoose.Schema.Types.ObjectId,
@@ -11,6 +12,7 @@ const jobSchema = mongoose.Schema({
         ref : "user"
     }],
     status : String,
+    salary : Number,
     date : {
         type : Date,
         default : Date.now(),

@@ -1,10 +1,9 @@
 import React from 'react'
-import { useState } from 'react';
-import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
-
-function Usignup() {
+function Rsignup() {
 
     const navigate = useNavigate();
 
@@ -20,12 +19,12 @@ function Usignup() {
         setError('');
 
         try{
-            const response = await axios.post('http://localhost:3000/U/signup' , {name , email , password} , { withCredentials: true });
+            const response = await axios.post('http://localhost:3000/R/signup' , {name , email , password} , { withCredentials: true });
 
             setName('');
             setEmail('');
             setPassword('');
-            navigate('/U/jobs/available');
+            navigate('/R/jobs');
         } catch(error) {
             setError(error.response.data.error);    
             // console.log('Login Error:', error.response ? error.response.data : error.message);
@@ -54,4 +53,4 @@ function Usignup() {
   )
 }
 
-export default Usignup
+export default Rsignup

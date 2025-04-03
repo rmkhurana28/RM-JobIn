@@ -9,6 +9,11 @@ import Tester from './components/Tester'
 import UDash from './components/UDash'
 import Available from './components/Available'
 import Applied from './components/Applied'
+import RecIn from './components/RecIn'
+import RDash from './components/RDash'
+import ROffered from './components/ROffered'
+import RApplications from './components/RApplications'
+import RRecruit from './components/RRecruit'
 
 function App() {
   
@@ -20,6 +25,12 @@ function App() {
         <Route path='U/jobs' element={<UDash />}>
           <Route path='available' element={<Available />}/>
           <Route path='applied' element={<Applied />} />
+        </Route>
+        <Route path='recruiter' element={<RecIn />} />
+        <Route path='R/jobs' element={<RDash />}>
+          <Route path='offered' element={<ROffered />} />
+          <Route path='applications' element={<RApplications/>} />
+          <Route path='recruit' element={<RRecruit />} />
         </Route>
         <Route path='test' element={<Tester />} />
       </Route>

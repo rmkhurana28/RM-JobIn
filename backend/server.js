@@ -17,6 +17,7 @@ app.use(cookieParser());
 
 
 const userRoutes = require('./routes/user-routes');
+const recRoutes = require('./routes/rec-routes')
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/U' , userRoutes)
+app.use('/R' , recRoutes)
 
 
 // app.post('/Ulogin' , (req,res) => {
@@ -45,8 +47,10 @@ const jobModel = require('./models/job-model')
 
 app.get('/create' , (req,res) => {
     jobModel.create({
-        post : 'poster',
-        status : 'testing',
+        post : 'poster2',
+        status : 'testing2',
+        job_name : 'name2',
+        salary : 4000,
     })
 })
 
