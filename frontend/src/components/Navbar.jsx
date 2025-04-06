@@ -16,7 +16,7 @@ function Navbar({isHome = false}) {
   return (
     <>
         <div className="w-full h-32 relative flex items-center justify-between p-10 bg-gradient-to-t from-[#403162] to-[#32274c]">
-          <h1 className='w-30 text-white text-2xl'>logo</h1>
+          <h1 className='w-30 text-white text-2xl'></h1>
 
           <div className='text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
             <Link to={'/'}>
