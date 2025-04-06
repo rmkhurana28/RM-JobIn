@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 const express = require('express');
 const app = express();
+=======
+const express = require('express')
+const app = express()
+const path = require('path');
+>>>>>>> 7bfe0a8 (my commit)
 
 // dotenv
 require('dotenv').config();
@@ -38,12 +44,30 @@ app.get('/', (req, res) => {
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+<<<<<<< HEAD
 });
 
 app.use('/U', userRoutes);
 app.use('/R', recRoutes);
 app.use('/J', jobRoutes);
+=======
+})
+
+app.use('/api/U' , userRoutes)
+app.use('/api/R' , recRoutes)
+app.use('/api/J' , jobRoutes)
+>>>>>>> 7bfe0a8 (my commit)
 
 // const jobModel = require('./models/job-model');
 
+<<<<<<< HEAD
 app.listen(process.env.PORT);
+=======
+
+const jobModel = require('./models/job-model')
+
+
+
+app.listen(process.env.PORT)
+
+>>>>>>> 7bfe0a8 (my commit)
