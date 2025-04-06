@@ -30,13 +30,20 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 
+// Serve static files from frontend
+app.use(express.static(path.join(__dirname, 'dist')));
+
 app.get('/', (req, res) => {
     res.send('working')
 })
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+<<<<<<< HEAD
   });
+=======
+});
+>>>>>>> 21a0d3e (new commit)
 
 app.use('/U' , userRoutes)
 app.use('/R' , recRoutes)
@@ -54,14 +61,7 @@ app.use('/J' , jobRoutes)
 
 const jobModel = require('./models/job-model')
 
-app.get('/create' , (req,res) => {
-    jobModel.create({
-        post : 'poster2',
-        status : 'testing2',
-        job_name : 'name2',
-        salary : 4000,
-    })
-})
+
 
 app.listen(process.env.PORT)
 
