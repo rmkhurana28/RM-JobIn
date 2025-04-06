@@ -39,11 +39,8 @@ app.get('/', (req, res) => {
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-<<<<<<< HEAD
   });
-=======
 });
->>>>>>> 21a0d3e (new commit)
 
 app.use('/U' , userRoutes)
 app.use('/R' , recRoutes)
