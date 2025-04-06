@@ -18,18 +18,13 @@ function Ulogin() {
         setError('')
 
         try{
-            const response = await axios.post('http://localhost:3000/U/login' , {email , password,} , { withCredentials: true })
-            // .then((response) => {
-            //     console.log(response);
-            // })
+            const response = await axios.post('/api/U/login' , {email , password,} , { withCredentials: true })            
 
             setEmail('');
-            setPassword('');
-            // console.log(response.data);
+            setPassword('');          
             navigate('/U/jobs/available');
         } catch(error) {
             setError(error.response.data.error);            
-            // console.log('Login Error:', error.response ? error.response.data.error : error.message);
             console.log(error.response.data.error);
         }
         
@@ -37,19 +32,49 @@ function Ulogin() {
 
   return (
     <>
-        <div className='bg-white w-140 h-132 overflow-auto border-0 border-blue-200 rounded-md flex flex-col justify-center items-center p-4 shadow-2xl'>
-            <h1 className='text-black overflow-auto h-12 bg-blue-400 rounded-lg shadow-2xl w-full text-center text-4xl'>Login Form</h1>
+        <div className="mt-20 h-auto w-[38rem] text-white p-10 rounded-2xl shadow-2xl" style={{ backgroundColor: '#32274c' }}>
+  <h1 className="text-center text-5xl text-purple-200 mb-8">User | Login Form</h1>
 
-            {error && <p className="text-red-600 text-xl bg-red-200 p-2 mt-4 rounded">{error}</p>} 
+  {error && (
+    <p className="text-red-500 text-2xl bg-red-100 p-3 mb-8 rounded text-center w-full">
+      {error}
+    </p>
+  )}
 
-            <form className='p-8 flex flex-col overflow-auto items-center justify-center h-100 w-full ' onSubmit={handleSubmit}>
-                <label className='px-1 w-full h-8 text-2xl text-left text-black' htmlFor="Email">Email</label>
-                <input required className='p-2 outline-2 outline-gray-400 mt-1 mb-4 w-full h-12 text-2xl text-left text-black rounded-lg shadow-2xl' type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                <label className=' w-full mt-4 h-8 text-2xl text-left text-black' htmlFor="Password">Password</label>
-                <input required className='p-2 shadow-2xl outline-2 outline-gray-400 mt-1 w-full h-12 text-2xl text-left text-black rounded-lg' type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button className='shadow-xl bg-blue-500 w-full text-white text-3xl hover:bg-blue-700 h-12 mt-10 rounded-lg' type='submit'>Login</button>
-            </form>
-        </div>
+  <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+    <label className="block mb-2 text-3xl text-purple-200" htmlFor="Email">
+      Email
+    </label>
+    <input
+      required
+      className="outline-none p-4 border-2 border-purple-800 focus:border-purple-500 mb-6 w-full h-16 text-2xl text-white bg-[#3d2f5e] rounded-xl shadow-inner placeholder-purple-300"
+      type="email"
+      placeholder="Email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+    />
+
+    <label className="block mb-2 text-3xl text-purple-200" htmlFor="Password">
+      Password
+    </label>
+    <input
+      required
+      className="outline-none p-4 border-2 border-purple-800 focus:border-purple-500 mb-10 w-full h-16 text-2xl text-white bg-[#3d2f5e] rounded-xl shadow-inner placeholder-purple-300"
+      type="password"
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <button
+      className="shadow-xl bg-purple-700 w-full text-white text-3xl hover:bg-purple-600 h-16 rounded-xl transition duration-300 ease-in-out"
+      type="submit"
+    >
+      Login
+    </button>
+  </form>
+</div>
+
 
         
     </>

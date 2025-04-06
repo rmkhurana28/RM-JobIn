@@ -7,11 +7,10 @@ function ROffered() {
   const [jobOffered  , setJobOffered] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/R/jobs/offered' , {withCredentials : true})
+    axios.get('/api/R/jobs/offered' , {withCredentials : true})
         .then(response => setJobOffered(response.data))
         .catch(err => {
           console.log(err.message);
-          console.log('error occured');
      })
   } , [])
 

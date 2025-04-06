@@ -11,11 +11,10 @@ function RDash() {
     const [loggedInRec , setLoggedInRec] = useState({});
   
     useEffect(() => {
-      axios.get('http://localhost:3000/R/dashboard' , {withCredentials : true})
+      axios.get('/api/R/dashboard' , {withCredentials : true})
         .then(response => setLoggedInRec(response.data))
        .catch(err => {
             console.log(err.message);
-            console.log('must be logged in ');
             navigate('/recruiter');
        })
     } , [])

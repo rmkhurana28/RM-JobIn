@@ -8,17 +8,13 @@ function MakeRoutes() {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
-  return (
-    // <>
-    //     <Navbar isHome={isHome}/>
-    //     <Outlet />        
-    // </>
+  return (    
     <div className="h-screen overflow-hidden flex flex-col">
       <Navbar isHome={isHome} />
       <div className="flex-grow overflow-hidden">
         <Outlet />
       </div>
-    </div>
+    </div>    
   )
 }
 

@@ -32,7 +32,6 @@ function App() {
           <Route path='applications' element={<RApplications/>} />
           <Route path='recruit' element={<RRecruit />} />
         </Route>
-        <Route path='test' element={<Tester />} />
       </Route>
     )
   )

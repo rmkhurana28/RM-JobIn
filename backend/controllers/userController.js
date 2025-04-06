@@ -7,8 +7,7 @@ const cookieParser = require('cookie-parser');
 const jobModel = require('../models/job-model');
 
 module.exports.userSignup = async function (req,res){
-    try {
-        console.log("Signup req recieved : " , req.body);
+    try {        
 
         let {name , email , password} = req.body;
 
@@ -28,15 +27,11 @@ module.exports.userSignup = async function (req,res){
                 let userToken = createUserToken(user);
                 res.cookie('user' , userToken);
                 res.status(200).json({'success' : 'Account Created Succesfully'});
-                console.log("Signup succesfull");
                 return;
 
             });
         });
 
-        
-
-        console.log("User created !!");
         return;
         
     } catch(err) {
@@ -62,7 +57,6 @@ module.exports.userLogin = async function (req,res){
                 res.cookie('user' , userToken);
 
                 res.status(200).json({'success' : 'Logged in Succesfully'});
-                console.log("login success");
                 return;
             }
         });        
@@ -74,56 +68,80 @@ module.exports.userLogin = async function (req,res){
 }
 
 module.exports.sendAvailableJobs = async function(req,res){
-    let allJobs = await jobModel.find();
-    res.send(allJobs)
+    try{
+        let allJobs = await jobModel.find();
+        res.send(allJobs)
+    } catch(err){
+        console.log(err);
+    }
+    
 }
 
 module.exports.sendAppliedJobs = async function(req,res){
-    res.send(req.user.applied);
+    try{
+        res.send(req.user.applied);
+    } catch(err){
+        console.log(err);
+    }
+    
 }
 
 module.exports.applyForJob = async function(req,res){
-    console.log("calling");
-    let user = req.user;
+    try{
+        let user = req.user;
 
-    let {job_id} = req.params;
+        let {job_id} = req.params;
 
-    let job = await jobModel.findOne({_id : job_id});
+        let job = await jobModel.findOne({_id : job_id});
 
-    if(!job) return res.send('job not found');
+        if(!job) return res.send('job not found');
 
-    let alreadyApplied = user.applied.some(currentJob => currentJob.equals(job_id));
-    if (alreadyApplied) return res.status(400).send('Already applied');
+        let alreadyApplied = user.applied.some(currentJob => currentJob.equals(job_id));
+        if (alreadyApplied) return res.status(400).send('Already applied');        
 
-    // user.applied.map((currentJob) => {
-    //     if(currentJob === job._id) return res.send('already exist');
-    // })
+        user.applied.push(job_id);
+        job.applied_by.push(user._id);
+        await user.save();
+        await job.save();
 
-    user.applied.push(job_id);
-    job.applied_by.push(user._id);
-    await user.save();
-    await job.save();
-    console.log("user and job updated");
+        return res.send("updated")
 
-    return res.send("updated")
+    } catch(err){
+        console.log(err);
+    }
     
 }
 
 module.exports.unApplyForJob = async function(req,res){
-    let user = await userModel.findOne({_id : req.user._id});
+    try{
+        let user = await userModel.findOne({_id : req.user._id});
 
-    let {job_id} = req.params;
+        let {job_id} = req.params;
 
-    let job = await jobModel.findOne({_id : job_id});
-    if(!job) return res.send('job not found');
+        let job = await jobModel.findOne({_id : job_id});
+        if(!job) return res.send('job not found');
 
-    user.applied = user.applied.filter(jobId => jobId.toString() !== job_id.toString());
-    job.applied_by = job.applied_by.filter(userId => userId.toString() !== user._id.toString());
+        user.applied = user.applied.filter(jobId => jobId.toString() !== job_id.toString());
+        job.applied_by = job.applied_by.filter(userId => userId.toString() !== user._id.toString());
 
-    await user.save();
-    await job.save();
+        await user.save();
+        await job.save();
 
-    console.log("user and job removed");
 
-    return res.send("removed")
+        return res.send("removed")
+
+    } catch(err){
+        console.log(err);
+    }
+    
+}
+
+module.exports.userLogout = async (req,res) => {
+    try{
+        res.clearCookie('user');
+        return res.send('Logged out');
+    } catch(err){
+        console.log(err);
+    }
+    
 }

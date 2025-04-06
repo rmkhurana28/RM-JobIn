@@ -5,20 +5,15 @@ function Tester() {
     const [loggedInUser , setLoggedInUser] = useState({});
 
     useEffect(() => {
-            axios.get('http://localhost:3000/U/tester' ,  { withCredentials: true })
+            axios.get('/api/U/tester' ,  { withCredentials: true })
                 .then((response) => {
                     console.log(response.data);
                     setLoggedInUser(response.data)
                 })
                 .catch((err) => {
                     console.log(err.message);
-                    console.log('must be logged in ');
                 })
-    } , [])
-
-    useEffect(() => {
-        console.log('logged user : ' , loggedInUser);
-    } , [loggedInUser])
+    } , [])    
 
   return (
     <h1>

@@ -15,7 +15,6 @@ module.exports = async function (req,res,next) {
                                   .select('-password');
 
         req.rec = rec
-        console.log("rec is logged in ");
         next();
     } catch(err) {
         console.log(err.message);

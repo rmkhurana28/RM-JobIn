@@ -1,9 +1,10 @@
 const express = require('express');
-const { userSignup, userLogin , sendAvailableJobs , sendAppliedJobs , applyForJob , unApplyForJob} = require('../controllers/userController');
+const { userSignup, userLogin , sendAvailableJobs , sendAppliedJobs , applyForJob , unApplyForJob, userLogout} = require('../controllers/userController');
 const router = express.Router()
 
 // logged in middleware
 const isUserLoggedIn = require('../middlewares/isUserLoggedIn');
+const isRecLoggedIn = require('../middlewares/isRecLoggedIn');
 
 router.post('/login' , userLogin)
 
@@ -18,9 +19,6 @@ router.get('/jobs/applied' , isUserLoggedIn , sendAppliedJobs);
 router.post('/jobs/apply/:job_id' , isUserLoggedIn , applyForJob);
 router.post('/jobs/unApply/:job_id' , isUserLoggedIn , unApplyForJob);
 
-router.get('/tester' , isUserLoggedIn , (req,res) => {
-    console.log(req.user);
-    res.send(req.user);
-})
+router.post('/logout' , isUserLoggedIn , userLogout)
 
 module.exports = router

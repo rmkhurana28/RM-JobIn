@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {recSignup, recLogin, recGetAllOffered, recWithdrawJob} = require('../controllers/recController')
+const {recSignup, recLogin, recGetAllOffered, recWithdrawJob , recGetAllApplications, recLogout} = require('../controllers/recController')
 
 const isRecLoggedIn = require('../middlewares/isRecLoggedIn');
 
@@ -13,12 +13,12 @@ router.get('/dashboard' , isRecLoggedIn , (req,res) => {
 })
 
 router.get('/jobs/offered' , isRecLoggedIn , recGetAllOffered);
+router.get('/jobs/applications' , isRecLoggedIn , recGetAllApplications);
 
 router.put('/jobs/offered/withdraw/:job_id' , isRecLoggedIn , recWithdrawJob)
 
-router.get('/' , (req,res) => {
-    res.send('working');
-})
+router.post('/logout' , isRecLoggedIn , recLogout)
+
 
 
 module.exports = router;

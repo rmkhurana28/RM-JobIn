@@ -5,12 +5,12 @@ function GetStarted() {
   return (
     <>
         <div className='flex gap-4'>
-        <Link to={'user'}>
-            <button type="button" className="px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Looking for Job?</button>
-        </Link>
-        <Link to={'recruiter'}>
-            <button type="button" className="px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Looking to Hire?</button>
-        </Link>
+          <Link to={'user'}>
+            <button type="button" className="h-12 w-60 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2">Looking for Job?</button>              
+          </Link>
+          <Link to={'recruiter'}>
+            <button type="button" className="h-12 w-60 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2">Looking to hire?</button>              
+          </Link>
         </div>
         
     </>

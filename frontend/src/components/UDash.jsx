@@ -10,11 +10,10 @@ function UDash() {
   const [loggedInUser , setLoggedInUser] = useState({});
 
   useEffect(() => {
-    axios.get('http://localhost:3000/U/dashboard' , {withCredentials : true})
+    axios.get('/api/U/dashboard' , {withCredentials : true})
       .then(response => setLoggedInUser(response.data))
      .catch(err => {
           console.log(err.message);
-          console.log('must be logged in ');
           navigate('/user');
      })
   } , [])

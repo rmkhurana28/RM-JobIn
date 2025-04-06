@@ -14,10 +14,14 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+// Serve static files from frontend
+app.use(express.static(path.join(__dirname, 'dist')));
+
 
 
 const userRoutes = require('./routes/user-routes');
 const recRoutes = require('./routes/rec-routes')
+const jobRoutes = require('./routes/job-routes')
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -30,8 +34,13 @@ app.get('/', (req, res) => {
     res.send('working')
 })
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  });
+
 app.use('/U' , userRoutes)
 app.use('/R' , recRoutes)
+app.use('/J' , jobRoutes)
 
 
 // app.post('/Ulogin' , (req,res) => {

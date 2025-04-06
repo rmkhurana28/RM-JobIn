@@ -9,8 +9,6 @@ const userModel = require('../models/user-model');
 
 module.exports.recSignup = async (req,res) => {
     try {
-        console.log("Signup req recieved : " , req.body);
-
         let {name , email , password} = req.body;
 
         let rec = await recModel.findOne({email});
@@ -29,15 +27,10 @@ module.exports.recSignup = async (req,res) => {
                 let recToken = createRecToken(rec);
                 res.cookie('rec' , recToken);
                 res.status(200).json({'success' : 'Account Created Succesfully'});
-                console.log("Signup succesfull");
                 return;
-
             });
         });
 
-        
-
-        console.log("Rec created !!");
         return;
         
     } catch(err) {
@@ -63,7 +56,6 @@ module.exports.recLogin = async function (req,res){
                 res.cookie('rec' , recToken);
 
                 res.status(200).json({'success' : 'Logged in Succesfully'});
-                console.log("login success");
                 return;
             }
         });        
@@ -77,7 +69,6 @@ module.exports.recLogin = async function (req,res){
 module.exports.recGetAllOffered = async function (req,res){
     try{
         let offeredJobs = await jobModel.find({offered_by : req.rec._id});
-        console.log('offered jobs : ' , offeredJobs);
         return res.send(offeredJobs);
     } catch(err){
         console.log(err);
@@ -86,34 +77,66 @@ module.exports.recGetAllOffered = async function (req,res){
 }
 
 module.exports.recWithdrawJob = async function(req,res){
-    let {job_id} = req.params;
 
-    let job = await jobModel.findOne({_id : job_id});
+    try{
+        let {job_id} = req.params;
 
-    let offeredBy = await recModel.findOneAndUpdate(
-        {_id : req.rec._id},
-        {
-            $pull : {offered : job_id},
-        },
-        {new : true},
-    );
+        await jobModel.findOne({_id : job_id});
 
-    // let allUsers = await userModel.find();
+        await recModel.findOneAndUpdate(
+            {_id : req.rec._id},
+            {
+                $pull : {offered : job_id},
+            },
+            {new : true},
+        );    
+
+        await userModel.updateMany(
+            {applied : job_id},
+            {
+                $pull : {applied : job_id},
+            }
+        )
+
+        await jobModel.deleteOne({_id : job_id});
+
+        return res.send('updated');
     
-    // allUsers.map((user) => {
-    //     user.applied.some()
-    // })
+    } catch(err){
+        console.log(err);
+    }
+    
 
-    await userModel.updateMany(
-        {applied : job_id},
-        {
-            $pull : {applied : job_id},
-        }
-    )
+    
+}
 
-    await jobModel.deleteOne({_id : job_id});
+module.exports.recGetAllApplications = async (req,res) => {
+    try{
+        let jobsApplied = await jobModel.find(
+            {
+                offered_by : req.rec._id,
+                applied_by : {
+                    $exists : true,
+                    $ne : []
+                }
+            }
+        ).populate('applied_by')
+    
+    
+        return res.send(jobsApplied);
+    } catch(err){
+        console.log(err);
+    }
+    
+}
 
-    return res.send('updated');
+module.exports.recLogout = async (req,res) => {
+    try{
+        res.clearCookie('rec');
+        return res.send('Logged out');
+    } catch(err) {
+        console.log(err);
+    }
 
     
 }
