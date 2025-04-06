@@ -1,5 +1,5 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // dotenv
 require('dotenv').config();
@@ -15,50 +15,35 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 // Serve static files from frontend
+const path = require('path');  // <-- Don't forget to require 'path'
 app.use(express.static(path.join(__dirname, 'dist')));
 
-
-
 const userRoutes = require('./routes/user-routes');
-const recRoutes = require('./routes/rec-routes')
-const jobRoutes = require('./routes/job-routes')
+const recRoutes = require('./routes/rec-routes');
+const jobRoutes = require('./routes/job-routes');
 
 app.use(cors({
     origin: "http://localhost:5173",
-    credentials : true,
-}))
+    credentials: true,
+}));
 app.use(express.json());
-app.use(express.urlencoded({extended : true}));
+app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from frontend
+// Serve static files again (okay, but technically this can be removed since it's already used above)
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/', (req, res) => {
-    res.send('working')
-})
+    res.send('working');
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-  });
 });
 
-app.use('/U' , userRoutes)
-app.use('/R' , recRoutes)
-app.use('/J' , jobRoutes)
+app.use('/U', userRoutes);
+app.use('/R', recRoutes);
+app.use('/J', jobRoutes);
 
+// const jobModel = require('./models/job-model');
 
-// app.post('/Ulogin' , (req,res) => {
-//     console.log("login req recieved : " , req.body);
-//     res.send('okay');
-// })
-// app.post('/Usignup' , (req,res) => {
-//     console.log("signup req recieved : " , req.body);
-//     res.send('okay');
-// })
-
-const jobModel = require('./models/job-model')
-
-
-
-app.listen(process.env.PORT)
-
+app.listen(process.env.PORT);
